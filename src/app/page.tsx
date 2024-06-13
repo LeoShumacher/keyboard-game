@@ -31,25 +31,24 @@ export default function Home() {
         console.log("Letra:", keyPress);
         setKeyPressed(keyPress);
         if (generatedLetters.includes(keyPress)) {
-        
           generatedLetters.shift();
         }
       }
     });
   }, [generatedLetters]);
 
-  useEffect(() => {
-    if (keyPressed) {
-      console.log(generatedLetters);
-    }
-  }, [keyPressed]);
-
   return (
     <main className="flex flex-wrap gap-10">
       <button onClick={RandomKey}>RANDOM</button>
-      {generatedLetters.map((index, letters) => (
-        <span key={letters}> {index}</span>
-      ))}
+
+
+      {generatedLetters.length === 1 ? (
+        <p>ganhou</p>
+      ) : (
+        generatedLetters.map((index, letters) => (
+          <span key={letters}> {index}</span>
+        ))
+      )}
     </main>
   );
 }
