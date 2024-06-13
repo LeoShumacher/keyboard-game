@@ -1,20 +1,27 @@
-"use client"
+"use client";
+
+import { useState } from "react";
+
 export default function Home() {
-  let alphabet = [ 
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 
-    'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 
-    'y', 'z'
-  ]
+  const [showLetter, setshowLetter] = useState<String>();
+  const alphabet: string[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   function RandomKey() {
-    const letter = alphabet[~~(Math.random() * alphabet.length)];
-    console.log(letter)
-    return letter
+    const RandomLetters: string[] = [];
+
+    for (let i = 0; i < 5; i++) {
+      const letter = alphabet[~~(Math.random() * alphabet.length)];
+      RandomLetters.push(letter);
+    }
+    const letters = RandomLetters.join("");
+    setshowLetter(letters);
+    console.log(letters);
   }
 
   return (
     <main>
       <button onClick={RandomKey}>RANDOM</button>
+      {showLetter ? <p>{showLetter}</p> : ""}
     </main>
   );
 }
