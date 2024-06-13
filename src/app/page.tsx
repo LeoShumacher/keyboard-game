@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [generatedLetters, setGeneratedLetters] = useState<string[]>([]);
-  const [showLetter, setshowLetter] = useState<string>();
   const [keyPressed, setKeyPressed] = useState<string>();
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -15,9 +14,8 @@ export default function Home() {
       const letter = alphabet[~~(Math.random() * alphabet.length)];
       RandomLetters.push(letter);
     }
-    setGeneratedLetters(RandomLetters);
     const letters = RandomLetters.join("");
-    setshowLetter(letters);
+    setGeneratedLetters(RandomLetters);
     console.log(RandomLetters);
     return letters;
   }
@@ -32,7 +30,7 @@ export default function Home() {
       ) {
         const keyPress = String.fromCharCode(keyCode).toUpperCase();
         console.log("Letra:", keyPress);
-        setKeyPressed(keyPress)
+        setKeyPressed(keyPress);
         if (generatedLetters.includes(keyPress)) {
           alert("acertou");
           generatedLetters.shift();
@@ -43,15 +41,14 @@ export default function Home() {
 
   useEffect(() => {
     if (keyPressed) {
-      showLetter
+      console.log(generatedLetters);
     }
   }, [keyPressed]);
 
   return (
     <main className="flex flex-wrap gap-10">
       <button onClick={RandomKey}>RANDOM</button>
-
-      {showLetter}
+      {generatedLetters}
     </main>
   );
 }
