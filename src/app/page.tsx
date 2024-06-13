@@ -18,9 +18,28 @@ export default function Home() {
     console.log(letters);
   }
 
+  function getKey() {
+    document.addEventListener("keydown", (event: KeyboardEvent) => {
+      const keyCode = event.keyCode || event.which;
+
+      if (
+        (keyCode >= 65 && keyCode <= 90) ||
+        (keyCode >= 97 && keyCode <= 122)
+      ) {
+        const keyPress = String.fromCharCode(keyCode);
+        console.log("Letra:", keyPress);
+        return keyPress;
+      }
+    });
+  }
+
+
+
   return (
-    <main>
+    <main className="flex gap-10">
       <button onClick={RandomKey}>RANDOM</button>
+      <button onClick={getKey}>KEY</button>
+
       {showLetter ? <p>{showLetter}</p> : ""}
     </main>
   );
