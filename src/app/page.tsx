@@ -4,8 +4,23 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [generatedLetters, setGeneratedLetters] = useState<string[]>([]);
-  const [showLetter, setshowLetter] = useState<String>();
-  const alphabet: string[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const [showLetter, setshowLetter] = useState<string>();
+  const [keyPressed, setKeyPressed] = useState<string>();
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+  function RandomKey() {
+    const RandomLetters: string[] = [];
+
+    for (let i = 0; i < 6; i++) {
+      const letter = alphabet[~~(Math.random() * alphabet.length)];
+      RandomLetters.push(letter);
+    }
+    setGeneratedLetters(RandomLetters);
+    const letters = RandomLetters.join("");
+    setshowLetter(letters);
+    console.log(RandomLetters);
+    return letters;
+  }
 
   useEffect(() => {
     document.addEventListener("keydown", (event: KeyboardEvent) => {
@@ -17,33 +32,26 @@ export default function Home() {
       ) {
         const keyPress = String.fromCharCode(keyCode).toUpperCase();
         console.log("Letra:", keyPress);
-
+        setKeyPressed(keyPress)
         if (generatedLetters.includes(keyPress)) {
-          alert("Acertou a letra!");
+          alert("acertou");
+          generatedLetters.shift();
         }
       }
     });
   }, [generatedLetters]);
 
-  function RandomKey() {
-    const RandomLetters: string[] = [];
-
-    for (let i = 0; i < 5; i++) {
-      const letter = alphabet[~~(Math.random() * alphabet.length)];
-      RandomLetters.push(letter);
+  useEffect(() => {
+    if (keyPressed) {
+      showLetter
     }
-    setGeneratedLetters(RandomLetters);
-    const letters = RandomLetters.join("");
-    setshowLetter(letters);
-    console.log(letters);
-    return letters;
-  }
+  }, [keyPressed]);
 
   return (
     <main className="flex flex-wrap gap-10">
       <button onClick={RandomKey}>RANDOM</button>
 
-      {showLetter ? <p className="text-red-500">{showLetter}</p> : ""}
+      {showLetter}
     </main>
   );
 }
