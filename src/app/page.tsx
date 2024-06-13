@@ -9,7 +9,6 @@ export default function Home() {
 
   function RandomKey() {
     const RandomLetters: string[] = [];
-
     for (let i = 0; i < 6; i++) {
       const letter = alphabet[~~(Math.random() * alphabet.length)];
       RandomLetters.push(letter);
@@ -32,7 +31,7 @@ export default function Home() {
         console.log("Letra:", keyPress);
         setKeyPressed(keyPress);
         if (generatedLetters.includes(keyPress)) {
-          alert("acertou");
+        
           generatedLetters.shift();
         }
       }
@@ -48,7 +47,9 @@ export default function Home() {
   return (
     <main className="flex flex-wrap gap-10">
       <button onClick={RandomKey}>RANDOM</button>
-      {generatedLetters}
+      {generatedLetters.map((index, letters) => (
+        <span key={letters}> {index}</span>
+      ))}
     </main>
   );
 }
