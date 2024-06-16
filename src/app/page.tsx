@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [generatedLetters, setGeneratedLetters] = useState<string[]>([]);
+  const [time, setTime] = useState(10);
+  const [ startCountdown, setStartCountdown ] = useState(false)
   const [keyPressed, setKeyPressed] = useState<string>();
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -37,18 +39,35 @@ export default function Home() {
     });
   }, [generatedLetters]);
 
+  
+  useEffect(() => {
+    if (startCountdown && time > 0) {
+      const timerId = setTimeout(() => {
+        setTime((prevTime) => prevTime - 1);
+      }, 1000);
+
+      return () => clearTimeout(timerId);
+    }
+  }, [startCountdown, time]);
+
+  const StartGame = () => {
+    RandomKey()
+    setStartCountdown(true);
+  };
+
   return (
     <main className="flex flex-wrap gap-10">
-      <button onClick={RandomKey}>RANDOM</button>
-
-
-      {generatedLetters.length === 1 ? (
+      <button onClick={StartGame}>GERAR</button>
+      {time === 0 ? (
+        <p> Perdeu</p>
+      ) : generatedLetters.length === 1 ? (
         <p>ganhou</p>
       ) : (
         generatedLetters.map((index, letters) => (
           <span key={letters}> {index}</span>
         ))
       )}
+      {time}
     </main>
   );
 }
