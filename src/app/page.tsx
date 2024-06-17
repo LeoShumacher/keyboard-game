@@ -51,7 +51,7 @@ export default function Home() {
 
   const StartGame = () => {
     RandomKey();
-    setTime(10);
+    setTime(3);
     setLetterBoolean(true);
     setStartCountdown(true);
   };
@@ -62,7 +62,6 @@ export default function Home() {
         <Rules />
         <div className="bg-gray-300 w-[370px] h-20 rounded-lg flex justify-center">
           <div className="flex items-center justify-center gap-3 ">
-
             {letterBoolean === true
               ? generatedLetters.length === 0
                 ? "ganhou"
@@ -79,7 +78,14 @@ export default function Home() {
               : ""}
           </div>
         </div>
-        {time > 0 ? (
+        {letterBoolean === true && time === 0 ? (
+          <button
+            className="w-40 h-12 rounded-md font-semibold text-white bg-gray-800  hover:bg-slate-800/90"
+            onClick={StartGame}
+          >
+            RECOMEÇAR
+          </button>
+        ) : time > 0 ? (
           <p>Tempo: {time}</p>
         ) : (
           <button
